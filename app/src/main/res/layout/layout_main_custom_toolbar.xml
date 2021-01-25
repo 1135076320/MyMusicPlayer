@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/radio_group_control"
+    android:orientation="horizontal"
+    android:layout_height="?actionBarSize"
+    android:layout_width="wrap_content"
+    android:layout_gravity="end"
+    android:gravity="center_vertical"
+    tools:showIn="@layout/activity_main"
+    android:divider="@drawable/divider_large_horizontal"
+    android:showDividers="beginning|middle|end"
+    >
+    <RadioButton
+        android:id="@+id/play_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_main_nav_play_list"
+        tools:button="@drawable/ic_main_nav_play_list_selected"
+        android:checked="true"/>
+
+    <RadioButton
+        android:id="@+id/to_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_main_nav_music"
+        tools:button="@drawable/ic_main_nav_music_selected" />
+
+    <RadioButton
+        android:id="@+id/to_local_files"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_main_nav_local_files"
+        tools:button="@drawable/ic_main_nav_local_files_selected" />
+
+    <RadioButton
+        android:id="@+id/to_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_main_nav_settings"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        tools:button="@drawable/ic_main_nav_settings"
+        />
+
+
+
+
+</RadioGroup>
+
