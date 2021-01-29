@@ -5,29 +5,22 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/control_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.Title">
+        app:titleTextAppearance="@style/Theme.MP.TextAppearance.Light.Toolbar.Title">
 
-        <include layout="@layout/layout_main_custom_toolbar"/>
+        <include layout="@layout/layout_main_custom_toolbar" />
 
 
     </androidx.appcompat.widget.Toolbar>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
