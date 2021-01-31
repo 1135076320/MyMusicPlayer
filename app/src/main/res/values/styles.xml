@@ -62,33 +62,32 @@
         <item name="titleTextAppearance">@style/Theme.MP.TextAppearance.Light.Toolbar.Title</item>
     </style>
 
-    <style name="Theme.MP.Widget"/>
 
 
-    <!--    &lt;!&ndash; Widget &ndash;&gt;-->
+        <!-- Widget -->
 
-    <!--    <style name="Theme.MP.Widget"/>-->
+        <style name="Theme.MP.Widget"/>
 
-    <!--    &lt;!&ndash; Widget - Divider &ndash;&gt;-->
+        <!-- Widget - Divider -->
 
-    <!--    <style name="Theme.MP.Widget.Divider">-->
-    <!--        <item name="android:layout_width">0dp</item>-->
-    <!--        <item name="android:layout_height">0dp</item>-->
-    <!--        <item name="android:background">@color/mp.line</item>-->
-    <!--    </style>-->
+        <style name="Theme.MP.Widget.Divider">
+            <item name="android:layout_width">0dp</item>
+            <item name="android:layout_height">0dp</item>
+            <item name="android:background">@color/mp.line</item>
+        </style>
 
-    <!--    <style name="Theme.MP.Widget.Divider.Line">-->
-    <!--        <item name="android:layout_width">match_parent</item>-->
-    <!--        <item name="android:layout_height">match_parent</item>-->
-    <!--    </style>-->
+        <style name="Theme.MP.Widget.Divider.Line">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">match_parent</item>
+        </style>
 
-    <!--    <style name="Theme.MP.Widget.Divider.Line.Vertical">-->
-    <!--        <item name="android:layout_height">@dimen/mp.divider.line</item>-->
-    <!--    </style>-->
+        <style name="Theme.MP.Widget.Divider.Line.Vertical">
+            <item name="android:layout_height">@dimen/mp.divider.line</item>
+        </style>
 
-    <!--    <style name="Theme.MP.Widget.Divider.Line.Horizontal">-->
-    <!--        <item name="android:layout_width">@dimen/mp.divider.line</item>-->
-    <!--    </style>-->
+        <style name="Theme.MP.Widget.Divider.Line.Horizontal">
+            <item name="android:layout_width">@dimen/mp.divider.line</item>
+        </style>
 
 
     <!--    <style name="Theme.MP.Widget.SegmentedControl">-->
@@ -142,12 +141,12 @@
     <!--        <item name="layoutManager">@string/mp.list.layoutManager.linear</item>-->
     <!--    </style>-->
 
-    <!--    <style name="Theme.MP.Widget.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">-->
-    <!--        <item name="android:id">@id/progress_bar</item>-->
-    <!--        <item name="android:layout_width">wrap_content</item>-->
-    <!--        <item name="android:layout_height">wrap_content</item>-->
-    <!--        <item name="android:layout_centerInParent">true</item>-->
-    <!--    </style>-->
+        <style name="Theme.MP.Widget.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
+            <item name="android:id">@id/progress_bar</item>
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:layout_centerInParent">true</item>
+        </style>
 
     <!--    <style name="Theme.MP.Widget.SegmentedControl.Left">-->
     <!--        <item name="android:background">@drawable/selector_segmented_left</item>-->
