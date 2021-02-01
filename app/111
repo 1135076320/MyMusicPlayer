@@ -1,3 +1,253 @@
+package com.cp.mymusicplayer.adapter;
+
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public abstract class AbstractFooterAdapter<T, V extends IAdapterView<T>> extends ListAdapter<T, V>{
+
+    protected static final int VIEW_TYPE_ITEM = 1; //普通类型的item
+    protected static final int VIEW_TYPE_FOOTER = 2;  //最下面的item
+
+    public AbstractFooterAdapter(Context context, List<T> data) {
+        super(context, data);
+    }
+
+    /**
+     * Default footer view is disabled, override in subclass and return true if want to enable it.
+     */
+    protected boolean isFooterEnabled() {
+        return false;
+    }
+
+    /**
+     * @return Custom footer view, but override {@link #isFooterEnabled} and return true first.
+     */
+    protected View createFooterView() {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_FOOTER){
+            return new RecyclerView.ViewHolder(createFooterView()){};
+        }
+        return super.onCreateViewHolder(parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(getItemViewType(position) == VIEW_TYPE_ITEM) {
+            super.onBindViewHolder(holder, position);
+        }
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isFooterEnabled() && position == getItemCount() - 1){
+            return VIEW_TYPE_FOOTER;
+        }
+        return VIEW_TYPE_ITEM;
+    }
+    @Override
+    public int getItemCount() {
+        int itemCount = super.getItemCount();
+        if (isFooterEnabled()) {
+            itemCount += 1;
+        }
+        return itemCount;
+    }
+
+    @Override
+    public T getItem(int position) {
+        if (getItemViewType(position) == VIEW_TYPE_FOOTER) {
+            return null;
+        }
+        return super.getItem(position);
+    }
+}
+
+
+package com.cp.mymusicplayer.adapter;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+abstract class ListAdapter<T, V extends IAdapterView<T>> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final static String TAG = ListAdapter.class.getName();
+
+    private List<T> dataSet;
+    private final Context context;
+
+    private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
+    private OnItemFocusChangedListener onItemFocusChangedListener;
+    private int lastItemClickPosition = RecyclerView.NO_POSITION;
+
+    abstract protected V createView(Context m);
+
+    /**
+     * 传入生成view需要的context和数据
+     */
+    public ListAdapter(Context context, List<T> data) {
+        this.context = context;
+        dataSet = data;
+    }
+
+    /**
+     * 创建ViewHolder，同时给item添加事件
+     */
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View itemView = (View) createView(context);
+        final RecyclerView.ViewHolder holder = new RecyclerView.ViewHolder(itemView) {};
+        if (onItemClickListener != null) {
+            itemView.setOnClickListener(v -> {
+                int position = holder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    lastItemClickPosition = position;
+                    onItemClickListener.onItemClick(position);
+                }
+            });
+        }
+        if (onItemLongClickListener != null) {
+            itemView.setOnLongClickListener(v -> {
+                int position = holder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemLongClickListener.onItemLongClick(position);
+                }
+                return false;
+            });
+        }
+        if (onItemFocusChangedListener != null){
+            itemView.setOnFocusChangeListener((v, hasFocus) -> {
+                int position = holder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemFocusChangedListener.onItemFocusChanged(position);
+                }
+            });
+        }
+        return holder;
+    }
+
+    /**
+     * recycleView重用了ViewHolder，该方法用于在滚动过程中改变ViewHolder的显示内容
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        try {
+            V itemView = (V) holder.itemView;
+            itemView.bind(getItem(position),position);
+        } catch (ClassCastException e) {
+            Log.e(TAG, "onBindViewHolder: " + "The Type of itemView is Wrong");
+            e.printStackTrace();
+        }
+    }
+
+    public T getItem(int position){
+        return dataSet.get(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (dataSet == null) return 0;
+        return dataSet.size();
+    }
+
+    public List<T> getDateSet() {
+        return dataSet;
+    }
+
+    public void addData(List<T> data) {
+        if (dataSet == null) {
+            dataSet = data;
+        } else {
+            dataSet.addAll(data);
+        }
+    }
+
+    public void clear() {
+        if (dataSet != null) dataSet.clear();
+    }
+
+    public void setDateSet(List<T> dataSet) {
+        this.dataSet = dataSet;
+    }
+
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public OnItemLongClickListener getOnItemLongClickListener() {
+        return onItemLongClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    public OnItemFocusChangedListener getOnItemFocusChangedListener() {
+        return onItemFocusChangedListener;
+    }
+
+    public void setOnItemFocusChangedListener(OnItemFocusChangedListener onItemFocusChangedListener) {
+        this.onItemFocusChangedListener = onItemFocusChangedListener;
+    }
+
+    public int getLastItemClickPosition() {
+        return lastItemClickPosition;
+    }
+}
+
+
+package com.cp.mymusicplayer.adapter;
+
+public interface OnItemClickListener {
+
+    void onItemClick(int position);
+}
+
+package com.cp.mymusicplayer.adapter;
+
+public interface OnItemFocusChangedListener {
+
+    void onItemFocusChanged(int position);
+}
+
+package com.cp.mymusicplayer.adapter;
+
+public interface OnItemLongClickListener {
+
+    void onItemLongClick(int position);
+}
+
+package com.cp.mymusicplayer.adapter;
+
+
+interface IAdapterView<T> {
+
+    void bind(T item, int position);
+}
 
 
 
